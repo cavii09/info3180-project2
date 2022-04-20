@@ -7,18 +7,64 @@ This file creates your application.
 
 from app import app
 from flask import render_template, request, jsonify, send_file
+from app.models import Cars
+from app.forms import CarForm
 import os
+from flask_wtf.csrf import generate_csrf
 
 
 ###
 # Routing for your application.
 ###
+@app.route('/api/csrf-token', methods=['GET'])
+def get_csrf():
+    return jsonify({'csrf_token': generate_csrf()})
+
 
 @app.route('/')
 def index():
     return jsonify(message="This is the beginning of our API")
 
+@app.route('/api/register', methods=['POST'])
+def register():
+    return jsonify(message="This is the beginning of our API")
 
+@app.route('/api/auth/login', methods=['POST'])
+def login():
+    return jsonify(message="This is the beginning of our API")
+
+@app.route('/api/auth/logout', methods=['POST'])
+def logout():
+    return jsonify(message="This is the beginning of our API")
+
+@app.route('/api/cars', methods=['GET'])
+def showcars():
+    return jsonify(message="This is the beginning of our API")        
+
+@app.route('/api/cars', methods=['POST'])
+def addcars():
+    return jsonify(message="This is the beginning of our API")
+
+@app.route('/api/cars/<int:id>', methods=['GET'])
+def viewcar(id):
+    return jsonify(message="This is the beginning of our API")
+
+@app.route('/api/cars/<int:id>/favourite', methods=['POST'])
+def addfavcar(id):
+    return jsonify(message="This is the beginning of our API")
+
+@app.route('/api/search', methods=['GET'])
+def search():
+    return jsonify(message="This is the beginning of our API")
+
+@app.route('/api/user/<int:id>', methods=['GET'])
+def viewuser(id):
+    return jsonify(message="This is the beginning of our API")
+
+@app.route('/api/user/<int:id>/favourites', methods=['GET'])
+def viewcars(id):
+    return jsonify(message="This is the beginning of our API")    
+    
 ###
 # The functions below should be applicable to all Flask apps.
 ###
