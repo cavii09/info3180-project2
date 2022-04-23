@@ -1,29 +1,35 @@
 <template>
-    <form id="CarForm"> 
-    <div>
+   <h1 class="page header">Register New User</h1>
+    <div class="form">
+      <form id="CarForm"> 
+
+      <div>
        <label class="username" for="username">Username</label>
-       <input type="text" id="username" name="username"><br>
+       <input type="text" id="username" name="username" class="form-control car-form">
+       </div> 
 
        <label class="password" for="password">Password</label>
-       <input type="text" id="password" name="password"><br>
+       <input type="text" id="password" name="password" class="form-control car-form">
        
        <label class="name" for="name">Fullname</label>
-       <input type="text" id="name" name="name"><br>
+       <input type="text" id="name" name="name" class="form-control car-form"><br>
 
        <label class="email" for="email">Email</label>
-       <input type="text" id="email" name="email"><br>
+       <input type="text" id="email" name="email" placeholder="youremail@gmail.com" class="form-control car-form">
 
        <label class="location" for="location">Location</label>
-       <input type="text" id="location" name="location"><br>
+       <input type="text" id="location" name="location" class="form-control car-form">
 
        <label class="biography" for="biography">Biography</label>
-       <input type="text" id="biography" name="biography"><br>
+       <input type="text" id="biography" name="biography" class="form-control car-form">
 
         <label class="photo" for="photo">Photo</label>
-       <input type="file" id="photo" name="photo"><br>
+       <input type="file" id="photo" name="photo" class="form-control car-form">
+       
        <button class="btn btn-primary mb-2" id="register" name="register">Register</button>
-    </div>
-        </form>
+      </form> 
+   </div>
+      
 </template>
 
 <script>
@@ -36,7 +42,12 @@ export default {
         email: '',
         location: '',
         biography: '',
-        photo: '', }
+        photo: '', 
+        flashMessage: '',
+        displayFlash: false,
+        isSuccess: false,
+        alertSuccessClass: 'alert-success',
+        alertErrorClass: 'alert-danger',}
       },
       
       created() {
@@ -46,7 +57,11 @@ export default {
       
       let carForm = document.getElementById('CarForm');
       let form_data = new FormData(carForm);
-        
+      
+        this.displayFlash = true;
+        this.isSuccess = true;
+        this.flashMessage = 'You are register successfully!'; 
+
       fetch("/api/upload", {
        method:'POST',
        body: form_data,
@@ -79,3 +94,8 @@ export default {
 };
 
 </script>
+<style> 
+.car-form{
+   width: 350px;
+}
+</style>

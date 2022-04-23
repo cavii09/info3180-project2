@@ -5,12 +5,15 @@ Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
-from app import app
-from flask import render_template, request, jsonify, send_file
-from app.models import Cars
-from app.forms import CarForm
+from app import app, db
+from flask import render_template, request, jsonify, send_file, session, flash
+from app.models import Cars, Favourites, Users
+from app.forms import CarForm, LoginForm
 import os
 from flask_wtf.csrf import generate_csrf
+from werkzeug.utils import secure_filename
+from werkzeug.security import check_password_hash
+from flask_login import login_user, logout_user, current_user, login_required
 
 
 ###
@@ -27,11 +30,55 @@ def index():
 
 @app.route('/api/register', methods=['POST'])
 def register():
-    return jsonify(message="This is the beginning of our API")
+    form = CarForm()
+
+    if request.method == "POST":
+        if form.validate_on_submit():
+            username=form.username.data
+            password = form.password.data
+            name = form.name.data 
+            email = form.email.data 
+            location = form.location.data
+            description=form.description.data
+            photo = form.photo.data
+            filename = secure_filename(photo.filename)
+            photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            user = Users(username, password, name, email, location, description, filename)
+            db.session.add(user)
+            db.session.commit()
+        flash('New User Added Successfull!', 'success')
+        return jsonify({'user':user})
+    return jsonify(form_errors(form))
 
 @app.route('/api/auth/login', methods=['POST'])
 def login():
-    return jsonify(message="This is the beginning of our API")
+    form = LoginForm()
+
+    if request.method == "POST" and form.validate_on_submit():
+
+     if form.username.data:
+            # Get the username and password values from the form.
+        username = form.username.data
+        password = form.password.data
+
+        user = Users.query.filter_by(username=username).first()
+        if user is not None and check_password_hash(user.password, password):
+            remember_me = False
+
+            if 'remember_me' in request.form:
+                remember_me = True
+                
+            login_user(user, remember=remember_me)
+            next_page = request.args.get('next')
+            flash('Logged in sucessfully.' 'success')
+            ret = {'auth': True, 'token': user.password, 'id': user.id}
+        else:
+            flash('Username or Password is incorrect.', 'danger')
+            # remember to flash a message to the user
+            ret = {'auth': False, 'token': '', 'id': ''}
+        
+    return jsonify(ret)
 
 @app.route('/api/auth/logout', methods=['POST'])
 def logout():

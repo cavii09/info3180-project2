@@ -2,7 +2,7 @@
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">Lab 7</a>
+        <a class="navbar-brand" href="/"><i class="fa fa-car" aria-hidden="true"></i>United Auto Sales</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -15,17 +15,16 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="registration">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <RouterLink to="/" class="nav-link active">Home</RouterLink>
+             <RouterLink class="nav-link" to="/register">Register</RouterLink> 
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/about">About</RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink class="nav-link" to="/register">Register</RouterLink>
+              <RouterLink class="nav-link" to="/about">Login</RouterLink>
             </li>
           </ul>
+          </div>
         </div>
       </div>
     </nav>
@@ -38,4 +37,7 @@ import { RouterLink } from "vue-router";
 
 <style>
 /* Add any component specific styles here */
+.registration{
+  float: right;
+}
 </style>

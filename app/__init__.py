@@ -5,9 +5,12 @@ from flask_login import LoginManager
 from flask_migrate import Migrate 
 
 app = Flask(__name__)
+app.config.from_object(Config)
+from flask_wtf.csrf import CSRFProtect
+
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-app.config.from_object(Config)
+csrf = CSRFProtect(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
