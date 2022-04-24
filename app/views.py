@@ -5,15 +5,19 @@ Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
+from fileinput import filename
 from app import app, db
 from flask import render_template, request, jsonify, send_file, session, flash
 from app.models import Cars, Favourites, Users
-from app.forms import CarForm, LoginForm
+from app.forms import CarForm, LoginForm, AddCar
 import os
 from flask_wtf.csrf import generate_csrf
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash
 from flask_login import login_user, logout_user, current_user, login_required
+import time
+from datetime import datetime
+from wsgiref.handlers import format_date_time
 
 
 ###
@@ -49,7 +53,7 @@ def register():
             db.session.commit()
         flash('New User Added Successfull!', 'success')
         return jsonify({'user':user})
-    return jsonify(form_errors(form))
+    return jsonify(form_errors(form)) 
 
 @app.route('/api/auth/login', methods=['POST'])
 def login():
@@ -90,6 +94,26 @@ def showcars():
 
 @app.route('/api/cars', methods=['POST'])
 def addcars():
+
+    form = AddCar()
+
+    if request.method == 'POST':
+      if form.validate_on_submit():
+         make = form.make.data
+         model = form.model.data
+         colour = form.colour.data
+         transmission = form.transmission.data
+         car_type = form.car_type.data
+         year = form.year.data
+         price = form.price.data
+         filename = secure_filename(photo.filename)
+         photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+         id = form.user_id.data
+
+         car = Cars(make=make, model=model, colour=colour, transmission=transmission, car_type=car_type, year=year, price=price, photo= filename, user_id=user_id)
+         db.session.add(car)
+         db.session.commit()
+         flash('Successfully added a car', 'success')    
     return jsonify(message="This is the beginning of our API")
 
 @app.route('/api/cars/<int:id>', methods=['GET'])
@@ -106,7 +130,8 @@ def search():
 
 @app.route('/api/user/<int:id>', methods=['GET'])
 def viewuser(id):
-    return jsonify(message="This is the beginning of our API")
+    user = Users.query.get_or_404(id)
+    return jsonify(username = user.username, password= user.password, name = user.name, email = user.email, location = user.location, bilography = user.bilography, photo = user.photo, date_joined = user.data_joined)
 
 @app.route('/api/user/<int:id>/favourites', methods=['GET'])
 def viewcars(id):
@@ -115,7 +140,10 @@ def viewcars(id):
 ###
 # The functions below should be applicable to all Flask apps.
 ###
-
+def formate_date_joined():
+    """format date"""
+    datetime = time.strftime("%b, %Y")
+    return datetime
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
 def form_errors(form):

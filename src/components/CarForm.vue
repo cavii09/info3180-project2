@@ -26,7 +26,7 @@
         <label class="photo" for="photo">Photo</label>
        <input type="file" id="photo" name="photo" class="form-control car-form">
        
-       <button class="btn btn-primary mb-2" id="register" name="register">Register</button>
+       <button @click="registerUser" class="btn btn-primary mb-2" id="register" name="register">Register</button>
       </form> 
    </div>
       
@@ -62,7 +62,7 @@ export default {
         this.isSuccess = true;
         this.flashMessage = 'You are register successfully!'; 
 
-      fetch("/api/upload", {
+      fetch("/api/register", {
        method:'POST',
        body: form_data,
        headers: {
