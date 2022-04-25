@@ -1,5 +1,5 @@
 <template>
-   <h1 class="page header">Add New Car</h1>
+   <h1 class="page header">Add New Car</h1> <br>
     <div class="form">
       <form id="CarForm"> 
 
@@ -32,7 +32,7 @@
         <label class="photo" for="photo">Photo</label>
        <input type="file" id="photo" name="photo" class="form-control car-form">
        
-       <button @click="registerUser" class="btn btn-primary mb-2" id="register" name="register">Save</button>
+       <button @click="registerUser" class="btn btn-primary mb-2" id="save" name="save">Save</button>
       </form> 
    </div>
       
@@ -57,9 +57,6 @@ export default {
         }
       },
       
-      created() {
-          this.getCsrfToken();
-      },
       methods: { carRegister(){
       
       let addCar = document.getElementById('AddCar');

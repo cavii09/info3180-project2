@@ -44,8 +44,8 @@ p{
  }
 
 img {
-  height: 50%;
-  width: 50%;
+  height: 25%;
+  width: 25%;
   padding-bottom: 50%;
   float: right;
 }

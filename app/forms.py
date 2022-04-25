@@ -2,7 +2,7 @@
 import email
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, FileField, FloatField, IntegerField, PasswordField
-from wtforms.validators import InputRequired, DataRequired, Email, Length
+from wtforms.validators import InputRequired, DataRequired, Length
 from flask_wtf.file import FileAllowed, FileRequired
 
 
@@ -10,7 +10,7 @@ class CarForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired()])
     password = PasswordField('Password', validators=[InputRequired()])
     name = StringField('Fullname', validators=[InputRequired()])
-    email = StringField('Email', validators=[InputRequired(), Email('Please enter a valid email address')])
+    email = StringField('Email', validators=[InputRequired()])
     location = StringField('Location', validators=[DataRequired(), InputRequired(), Length(max=700)])
     description =  TextAreaField('description', validators=[DataRequired(), InputRequired(), Length(max=800)])
     photo = FileField('Photo', validators=[FileRequired(), FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')])

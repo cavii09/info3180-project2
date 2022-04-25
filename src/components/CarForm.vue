@@ -50,9 +50,7 @@ export default {
         alertErrorClass: 'alert-danger',}
       },
       
-      created() {
-          this.getCsrfToken();
-      },
+     
       methods: { carRegister(){
       
       let carForm = document.getElementById('CarForm');
