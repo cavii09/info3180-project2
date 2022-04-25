@@ -1,7 +1,7 @@
 <template>
    <h1 class="page header">Register New User</h1>
     <div class="form">
-      <form id="CarForm"> 
+      <form id="Register"> 
 
       <div>
        <label class="username" for="username">Username</label>
