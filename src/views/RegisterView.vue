@@ -1,12 +1,12 @@
 <template>
      <div>
-       <AddCar/>  
+       <Register/>  
      </div>
     
 </template>
 
 <script>
-import AddCar from '@/components/AddCar.vue';
+import Register from '@/components/Register.vue';
 
 export default {
   data() {
