@@ -95,22 +95,18 @@ section#exploring{
     flex-flow: column wrap;
     margin: auto;
 }
-
 form#searchForm{
     padding:2em;
     margin-top: 2em;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
-
 div.row{
     align-items: center;
     justify-content: center;
 }
-
 form button{
     margin-top: 1em;
 }
-
 div#carsCard{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -122,16 +118,13 @@ div#carsCard{
     align-content: center;
     align-items: center;
 }
-
 div.card{
     width: 100%;
 }
-
 section.card-title{
     display: flex;
     flex-flow: row wrap;
 }
-
 span#pricespan{
     background: #41B883;
     color: #fff;
@@ -140,7 +133,6 @@ span#pricespan{
     padding: 0.05em 0.3em 0.05em 0.3em;
     border-radius: 0.5em;
 }
-
 span#pricespan img{
     width: 1em;
 }

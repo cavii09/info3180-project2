@@ -24,6 +24,11 @@ const router = createRouter({
       name: 'addcar',
       component: () => import('../views/AddCarView.vue')
     },
+    {
+      path: '/explore',
+      name: 'explore',
+      component: () => import('../views/Explore.vue')
+    },
         {
       path: '/about',
       name: 'about',

@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate 
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder='../dist/assets')
 app.config.from_object(Config)
 from flask_wtf.csrf import CSRFProtect
 
