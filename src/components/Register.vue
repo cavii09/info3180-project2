@@ -53,8 +53,8 @@ export default {
      
       methods: { carRegister(){
       
-      let carForm = document.getElementById('CarForm');
-      let form_data = new FormData(carForm);
+      let register = document.getElementById('Register');
+      let form_data = new FormData(register);
       
         this.displayFlash = true;
         this.isSuccess = true;
