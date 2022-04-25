@@ -113,7 +113,7 @@ def addcars():
          car = Cars(make=make, model=model, colour=colour, transmission=transmission, car_type=car_type, year=year, price=price, photo= filename, user_id=user_id)
          db.session.add(car)
          db.session.commit()
-         flash('Successfully added a car', 'success')    
+         flash('Successfully added a New Car!', 'success')    
     return jsonify(message="This is the beginning of our API")
 
 @app.route('/api/cars/<int:id>', methods=['GET'])

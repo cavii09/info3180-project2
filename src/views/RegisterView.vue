@@ -1,18 +1,18 @@
 <template>
      <div>
-       <CarForm/>  
+       <Register/>  
      </div>
     
 </template>
 
 <script>
-import CarForm from '@/components/CarForm.vue';
+import Register from '../components/Register.vue';
 
 export default {
   data() {
     return {};
   },
-  components: { CarForm }
+  components: { Register }
 };
 
 </script>

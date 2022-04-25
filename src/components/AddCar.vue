@@ -64,7 +64,7 @@ export default {
       
         this.displayFlash = true;
         this.isSuccess = true;
-        this.flashMessage = 'You are register successfully!'; 
+        this.flashMessage = 'You successfully Added a New Car!'; 
 
       fetch("/api/addcar", {
        method:'POST',
@@ -76,10 +76,12 @@ export default {
         .then(function (response) {
            return response.json();
         })
-        .then(function (data) {
+        .then(() => {
          // display a success message
-           console.log(data);
-        })
+           console.log("worked success")
+           this.$router.push({name: 'home'})
+          })
+
         .catch(function (error) {
            console.log(error);
         })
