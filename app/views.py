@@ -85,14 +85,63 @@ def login():
     return jsonify(ret)
 
 @app.route('/api/auth/logout', methods=['POST'])
+@login_required 
 def logout():
     return jsonify(message="This is the beginning of our API")
 
-@app.route('/api/cars', methods=['GET'])
+@app.route('/api/cars', methods=['GET', 'POST'])
+@login_required 
 def showcars():
-    return jsonify(message="This is the beginning of our API")        
+    
+    decoded = jwt.decode(user_token, app.config['SECRET_KEY'], algorithms=['HS256'])
+    if decoded['sub'] == current_user.username:
+        if request.method == "GET":
+            cars = []
+            returnedcars = Cars.query.all()
+            for car in returnedcars:
+                cars.append({
+                    "id": car.id,
+                    "description": car.description,
+                    "year": car.year,
+                    "make": car.make,
+                    "model": car.model,
+                    "colour": car.colour,
+                    "transmission": car.transmission,
+                    "car_type": car.car_type,
+                    "price": car.price,
+                    "photo": os.path.join(app.config['UPLOAD_FOLDER'], car.photo)[1:],
+                    "user_id": current_user.id
+                })
+            if len(cars) >=  3:
+                cars = [cars[-3], cars[-2], cars[-1]]
+            return jsonify(cars),200
+        elif request.method == "POST":
+            formobject =  CarForm()
+            if formobject.validate_on_submit():
+                fileobj = request.files['photo']
+                cleanedname = secure_filename(fileobj.filename)
+                fileobj.save(os.path.join(app.config['UPLOAD_FOLDER'], cleanedname))
+                if fileobj and (cleanedname != "" and cleanedname != " "):
+                    newcar = Cars(formobject.description.data, formobject.make.data, formobject.model.data,formobject.colour.data, formobject.year.data, formobject.transmission.data, formobject.car_type.data, formobject.price.data, cleanedname, current_user.id )
+                    db.session.add(newcar)
+                    db.session.commit()
+                    feedback = {
+                        "description": formobject.description.data,
+                        "year": formobject.year.data,
+                        "make": formobject.make.data,
+                        "model": formobject.model.data,
+                        "colour": formobject.colour.data,
+                        "transmission": formobject.transmission.data,
+                        "type": formobject.car_type.data,
+                        "price": formobject.price.data,
+                        "photo": cleanedname,
+                        "user_id": current_user.id
+                    }
+                    return jsonify(feedback),200
+            return jsonify(form_errors(formobject)),401         
 
 @app.route('/api/cars', methods=['POST'])
+@login_required 
 def addcars():
 
     form = AddCar()
@@ -117,23 +166,28 @@ def addcars():
     return jsonify(message="This is the beginning of our API")
 
 @app.route('/api/cars/<int:id>', methods=['GET'])
+@login_required 
 def viewcar(id):
     return jsonify(message="This is the beginning of our API")
 
 @app.route('/api/cars/<int:id>/favourite', methods=['POST'])
+@login_required 
 def addfavcar(id):
     return jsonify(message="This is the beginning of our API")
 
 @app.route('/api/search', methods=['GET'])
+@login_required 
 def search():
     return jsonify(message="This is the beginning of our API")
 
 @app.route('/api/user/<int:id>', methods=['GET'])
+@login_required 
 def viewuser(id):
     user = Users.query.get_or_404(id)
     return jsonify(username = user.username, password= user.password, name = user.name, email = user.email, location = user.location, bilography = user.bilography, photo = user.photo, date_joined = user.data_joined)
 
 @app.route('/api/user/<int:id>/favourites', methods=['GET'])
+@login_required 
 def viewcars(id):
     return jsonify(message="This is the beginning of our API")    
     
