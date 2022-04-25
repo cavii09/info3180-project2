@@ -26,6 +26,9 @@
             <li class="nav-item">
               <RouterLink class="nav-link" to="/addcar">Add Car</RouterLink>
             </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" to="/logout">Logout</RouterLink>
+            </li>
           </ul>
           </div>
         </div>
