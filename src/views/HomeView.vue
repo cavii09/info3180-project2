@@ -1,14 +1,6 @@
 <script>
-import CarForm from '@/components/CarForm.vue';
+import Register from '@/components/Register.vue';
 
-
-export default {
-    data() {
-        return {
-            message: "Hello World! This is Lab 7"
-        };
-    },
-}
 </script>
 
 <template>
